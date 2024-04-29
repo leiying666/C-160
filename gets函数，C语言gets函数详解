@@ -1,0 +1,68 @@
+gets函数，C语言gets函数详解
+
+在前面从键盘输入字符串是使用 scanf 和 %s。其实还有更简单的方法，即使用 gets() 函数。该函数的原型为：
+
+# include <stdio.h>
+char *gets(char *str);
+这个函数很简单，只有一个参数。参数类型为 char* 型，即 str 可以是一个字符指针变量名，也可以是一个字符数组名。
+
+gets() 函数的功能是从输入缓冲区中读取一个字符串存储到字符指针变量 str 所指向的内存空间。
+
+下面将前面中使用 scanf 输入字符串的程序改一下：
+
+# include <stdio.h>
+int main(void)
+{
+    char str[20] = "\0";  //字符数组初始化\0
+    printf("请输入字符串：");
+    gets(str);
+    printf("%s\n", str);
+    return 0;
+}
+输出结果是：
+请输入字符串：i love you
+i love you
+
+可见，gets() 函数不仅比 scanf 简洁，而且，就算输入的字符串中有空格也可以直接输入，不用像 scanf 那样要定义多个字符数组。也就是说:
+
+gets(str);
+完全可以取代:
+
+scanf("%s", string);
+不仅代码更简洁，而且可以直接输入带空格的字符串。同样，前面章节中，对字符指针变量所指向的内存单元进行初始化也可以用 gets()，下面将那个程序也改一下，将 scanf 换成 gets()：
+
+# include <stdio.h>
+int main(void)
+{
+    char str[30];
+    char *string = str;  //一定要先将指针变量初始化
+    printf("请输入字符串：");
+    gets(string);  //也可以写成gets(str);
+    printf("%s\n", string);  //输出参数是已经定义好的“指针变量名”
+    return 0;
+}
+输出结果是：
+请输入字符串：Hi i…like you
+Hi i…like you
+
+此外，关于使用 gets() 函数需要注意：使用 gets() 时，系统会将最后“敲”的换行符从缓冲区中取出来，然后丢弃，所以缓冲区中不会遗留换行符。这就意味着，如果前面使用过 gets()，而后面又要从键盘给字符变量赋值的话就不需要吸收回车清空缓冲区了，因为缓冲区的回车已经被 gets() 取出来扔掉了。下面写一个程序验证一下：
+
+# include <stdio.h>
+int main(void)
+{
+    char str[30];
+    char ch;
+    printf("请输入字符串：");
+    gets(str);
+    printf("%s\n", str);
+    scanf("%c", &ch);
+    printf("ch = %c\n", ch);
+    return 0;
+}
+输出结果是：
+请输入字符串：i love you
+i love you
+Y
+ch = Y
+
+我们看到，没有清空缓冲区照样可以输入’Y’，因为 gets() 已经将缓冲区中的回车取出来丢掉了。如果前面使用的不是 gets() 而是 scanf，那么通过键盘给 ch 赋值前就必须先使用 getchar() 清空缓冲区。
