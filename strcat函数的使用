@@ -1,0 +1,33 @@
+C语言中strcat()函数的使用详解
+1、strcat函数的各个参数介绍
+char* strcat(char* destination,const char* source)
+
+
+
+①函数名为strcat
+
+②返回值类型为char*，是目标空间的起始地址
+
+③函数的参数，第一个是目标空间的起始地址，第二个是源字符串的起始地址。
+
+2、strcat函数的作用
+strcat函数是在一个字符串后面追加一个字符串，也就是将两个字符串拼接起来。
+
+3、strcat函数的细节分析
+①strcat会从目标空间字符串的第一个'\0'处开始追加字符串，且追加字符串时会将第一个'0'给覆盖掉。
+
+②目标空间必须足够大，且可以进行修改。
+
+③目标空间必须得有'\0'
+
+④源字符串中必须也得有'\0'，追加时'\0'也被追加过去。
+
+#include<stdio.h>
+#include<stdio.h>
+int main()
+{
+	char ch1[20] = "Hello \0*******";
+	char ch2[] = "World!";
+	strcat(ch1,ch2);
+	return 0;
+}
