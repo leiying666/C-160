@@ -1,0 +1,30 @@
+当执行下面的程序时，如果输入ABC，则输出结果是（）
+#include  “stdio.h"  
+#include  “string.h"  
+int main()  
+{  
+    char ss[10]="1,2,3,4,5";
+    gets (ss); 
+    strcat (ss,"6789"); 
+    printf ("%s\n",ss); 
+    return 0;
+}
+A
+ABC6789
+B
+ABC67
+C
+12345ABC6
+D
+ABC456789
+正确答案：A
+首先打印输出ss时，输出的是【1,2,3,4,5】 是包含逗号的
+第二步gets()之后，ss应该为"A B C \0 3 , 4 , 5 \0"
+第三步strcat()之后，ss[10]="A B C 6 7 8 9 \0 5 \0"
+打印输出时，遇到第一个 \0 就结束，打印输出ABC6789     
+
+作者：Realself
+链接：https://www.nowcoder.com/exam/test/79929283/submission?examPageSource=Intelligent&pid=56698287&testCallback=https%3A%2F%2Fwww.nowcoder.com%2Fexam%2Fintelligent%3FquestionJobId%3D10
+来源：牛客网
+
+精华；gets函数会提取换行符（'\n'）并转换为'\0'存贮在字符串结尾处，并不会改变其他位置的字符
